@@ -29,6 +29,12 @@ jQuery( document ).ready(function( $ ) {
         return num;
     };
 
+    var validateZip = function(num) {
+        r = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+        if (r.test(num)) return num;
+        else return false;
+    };
+
     $('#phoneForm').submit(function(e) {
         e.preventDefault();
         $('#call_button').click();
@@ -37,14 +43,18 @@ jQuery( document ).ready(function( $ ) {
     $('#call_button').click(function(e) {
 
         var phone = $('#phone').val();
+        var zipcode = $('#zipcode').val();
 
         if (!validatePhone(phone))
             return alert('Please enter a valid US phone number!');
 
+        if (!validateZip(zipcode))
+            return alert('Please enter a valid US zip code!');
+
         var data = {
             campaignId: 'stop-mass-spying',
             userPhone: validatePhone(phone),
-            zipcode: '00000'
+            zipcode: validateZip(zipcode)
         };
 
         $.ajax({

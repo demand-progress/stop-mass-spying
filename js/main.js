@@ -14,6 +14,16 @@ var trackEvent = function(ev) {
     ga('send', 'event', ev);
 };
 
+var showOverlay = function($) {
+    $('.overlay').css('display', 'table');
+    setTimeout(function() {
+        $('.overlay').addClass('visible');
+        setTimeout(function() {
+            $('.overlay .modal .inner').addClass('visible');
+        }, 10);
+    }, 100);
+};
+
 jQuery( document ).ready(function( $ ) {
 
     var validatePhone = function(num) {
@@ -33,6 +43,12 @@ jQuery( document ).ready(function( $ ) {
         r = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
         if (r.test(num)) return num;
         else return false;
+    };
+
+
+    var validateEmail = function(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
     };
 
     $('#phoneForm').submit(function(e) {
@@ -67,13 +83,7 @@ jQuery( document ).ready(function( $ ) {
                 console.log('Placed call-congress call: ', res);
             }
         });
-        $('.overlay').css('display', 'table');
-        setTimeout(function() {
-            $('.overlay').addClass('visible');
-            setTimeout(function() {
-                $('.overlay .modal .inner').addClass('visible');
-            }, 10);
-        }, 100);
+        showOverlay($);
     });
 
     $('#emailForm').submit(function(e) {
@@ -117,8 +127,3 @@ jQuery( document ).ready(function( $ ) {
     });
 
 });
-
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}

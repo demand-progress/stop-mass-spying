@@ -68,19 +68,19 @@ jQuery( document ).ready(function( $ ) {
             return alert('Please enter a valid US zip code!');
 
         var data = {
-            campaignId: 'stop-mass-spying',
+            campaignId: 1,
             userPhone: validatePhone(phone),
             zipcode: validateZip(zipcode)
         };
 
         $.ajax({
-            url: 'http://call-server-dp.herokuapp.com/create',
+            url: 'http://demandprogress.callpower.org/call/create',
             type: "get",
             dataType: "json",
             data: data,
             success: function(res) {
-                trackEvent('call-congress');
-                console.log('Placed call-congress call: ', res);
+                trackEvent('call-power');
+                console.log('Placed call-power call: ', res);
             }
         });
         showOverlay($);
